@@ -40,10 +40,11 @@ class ActionView::Base
 
     attribute_display = options[:display] || instance[attribute]
 
-    if instance.valid?
-      form_tag_options.merge!({:html=>{:style=>"display: none"}}) 
-    else
+    instance.valid?
+    if instance.errors.on(attribute)
       content_tag_options.merge!({:style=>"display: none"})
+    else
+      form_tag_options.merge!({:html=>{:style=>"display: none"}})
     end
 
     render :partial => 'jintastic/in_place_editor', 
