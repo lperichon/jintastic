@@ -39,6 +39,10 @@ class ActionView::Base
     form_partial ||= "#{instance.class.to_s.downcase.pluralize}/form" unless input_attributes
 
     attribute_display = options[:display] || instance[attribute]
+    path = options[:path]
+    if path
+      form_tag_options.merge!({:url=>path})
+    end
 
     instance.valid?
     if instance.errors.on(attribute)
